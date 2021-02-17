@@ -144,12 +144,6 @@
             android:scaleType="fitXY"
             android:src="@drawable/ic_gallery" />
 
-        <!--TODO(Step 1 : Adding an option for undo)-->
-        <!--Here we have added list of points
-        1. Added a image button same as the brush button named ib_undo.
-        2. Added a ic_undo image in the drawable folder.
-        3. Further steps will be in MainActivity.kt-->
-        <!--START-->
         <ImageButton
             android:id="@+id/ib_undo"
             android:layout_width="50dp"
@@ -158,7 +152,6 @@
             android:scaleType="fitXY"
             android:src="@drawable/ic_undo"
             android:visibility="visible" />
-        <!--END-->
 
         <ImageButton
             android:id="@+id/ib_brush"
@@ -168,6 +161,14 @@
             android:contentDescription="image"
             android:scaleType="fitXY"
             android:src="@drawable/ic_brush" />
+
+        <ImageButton
+            android:id="@+id/ib_save"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:contentDescription="image"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_save" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
