@@ -6,30 +6,46 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.kidsdrawingapp.DrawingView
-        android:id="@+id/drawing_view"
+    <FrameLayout
+        android:id="@+id/fl_drawing_view_container"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="5dp"
-        android:layout_marginBottom="80dp"
         android:background="@drawable/background_drawing_view_layout"
+        android:padding="1dp"
         app:layout_constraintBottom_toTopOf="@+id/ll_paint_colors"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <!--TODO(Step 3 - We have added a onclick method as 'paintClicked' for all the image buttons which is further defined in MainActivity for selection from color pallet.)-->
-    <!--START-->
+        <!-- In FrameLayout the component which are
+       added below are in foreground and added above are in Background.-->
+        <ImageView
+            android:id="@+id/iv_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="image"
+            android:scaleType="centerCrop"
+            android:src="@drawable/image" />
+
+        <com.kidsdrawingapp.DrawingView
+            android:id="@+id/drawing_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#80FFFFFF" />
+    </FrameLayout>
+
+    <!--TODO(Step 2 - As we have added the Linear Layout below so need to update the 'app:layout_constraintBottom_toTopOf' as "@id/ll_action_buttons" instead of "@id/ib_brush".)-->
     <!-- Color pallet_normal -->
     <LinearLayout
         android:id="@+id/ll_paint_colors"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@id/ib_brush"
+        app:layout_constraintBottom_toTopOf="@id/ll_action_buttons"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/drawing_view">
+        app:layout_constraintTop_toBottomOf="@id/fl_drawing_view_container">
 
         <ImageButton
             android:layout_width="25dp"
@@ -110,18 +126,46 @@
             android:onClick="paintClicked"
             android:src="@drawable/pallet_normal"
             android:tag="@color/random" />
-
     </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/ib_brush"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_margin="5dp"
-        android:contentDescription="image"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_brush"
+    <!--TODO(Step 1 - We have added an image button for selecting the image from your phone.)-->
+    <!--Here we have added list of points :
+    1. Added an linear layout as 'll_action_buttons' and defined the attributes as per requirements.
+    2. Added the brush button in the linear layout the
+    and attributes of ConstraintLayout is added to LinearLayout
+    and removed from ib_brush button.
+    3. Added a image button same as the brush button named ib_gallery .
+    4. Added a ic_gallery image in the drawable folder.
+    5. Further steps will be in MainActivity.kt-->
+    <!--START-->
+    <LinearLayout
+        android:id="@+id/ll_action_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent">
+
+        <ImageButton
+            android:id="@+id/ib_gallery"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:contentDescription="image"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_gallery" />
+
+        <ImageButton
+            android:id="@+id/ib_brush"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:contentDescription="image"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_brush" />
+    </LinearLayout>
+    <!--END-->
+
 </androidx.constraintlayout.widget.ConstraintLayout>

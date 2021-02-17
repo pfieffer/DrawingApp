@@ -2,6 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.kidsdrawingapp">
 
+    <!--TODO(Step 3 : For selecting the image from your phone you need to give an permission for storage READ & WRITE.)-->
+    <!--START-->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--END-->
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"

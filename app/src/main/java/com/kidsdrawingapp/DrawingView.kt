@@ -174,8 +174,6 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
         mDrawPaint!!.strokeWidth = mBrushSize
     }
 
-    // TODO(Step 1 : Creating a function to set the selected color to DrawingView on click of colors in color pallet.)
-    // START
     /**
      * This function is called when the user desires a color change.
      * This functions sets the color of a store to selected color and able to draw on view using that color.
@@ -186,7 +184,6 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
         color = Color.parseColor(newColor)
         mDrawPaint!!.color = color
     }
-    // END
 
     // An inner class for custom path with two params as color and stroke size.
     internal inner class CustomPath(var color: Int, var brushThickness: Float) : Path()

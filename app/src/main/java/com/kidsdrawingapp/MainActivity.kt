@@ -1,10 +1,14 @@
 package com.kidsdrawingapp
 
+import android.Manifest
 import android.app.Dialog
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import kotlinx.android.synthetic.main.activity_main.*
@@ -38,7 +42,68 @@ class MainActivity : AppCompatActivity() {
         ib_brush.setOnClickListener {
             showBrushSizeChooserDialog()
         }
+
+        //TODO(Step 8 : Adding an click event to image button for selecting the image from gallery.)
+        //START
+        ib_gallery.setOnClickListener {
+            //Very firstly we will check the app required a storage permission.
+            // So we will add a permission in the Android.xml for storage.
+
+            //First checking if the app is already having the permission
+            if (isReadStorageAllowed()) {
+
+                // If the permission is granted we will code here. But now let us just ask for the permission.
+            } else {
+
+                //If the app don't have storage access permission we will ask for it.
+                requestStoragePermission()
+            }
+        }
+        // END
     }
+
+    //TODO(Step 6 - This method is override method which be executed when we update the status of the permission when we are ask to allow or deny.)
+    //START
+    /**
+     * This is override method and the method will be called when the user will tap on allow or deny
+     *
+     * Determines whether the delegate should handle
+     * {@link ActivityCompat#requestPermissions(Activity, String[], int)}, and request
+     * permissions if applicable. If this method returns true, it means that permission
+     * request is successfully handled by the delegate, and platform should not perform any
+     * further requests for permission.
+     *
+     * @param activity The target activity.
+     * @param permissions The requested permissions. Must me non-null and not empty.
+     * @param requestCode Application specific request code to match with a result reported to
+     */
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+
+        //Checking the request code of our request
+        if (requestCode == STORAGE_PERMISSION_CODE) {
+
+            //If permission is granted
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(
+                    this@MainActivity,
+                    "Permission granted now you can read the storage files.",
+                    Toast.LENGTH_LONG
+                ).show()
+            } else {
+                //Displaying another toast if permission is not granted
+                Toast.makeText(
+                    this@MainActivity,
+                    "Oops you just denied the permission.",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
+    }
+    //END
 
     /**
      * Method is used to launch the dialog to select different brush sizes.
@@ -66,7 +131,6 @@ class MainActivity : AppCompatActivity() {
         brushDialog.show()
     }
 
-    // TODO(Step 2 - A function for color selection.)
     /**
      * Method is called when color is clicked from pallet_normal.
      *
@@ -93,5 +157,103 @@ class MainActivity : AppCompatActivity() {
             //Current view is updated with selected view in the form of ImageButton.
             mImageButtonCurrentPaint = view
         }
+    }
+
+    //TODO(Step 4 - For the first time you need to ask for the permission
+    // for selecting the image from your phone or when it is not allowed it is when you are about to select an image from phone storage.)
+    //START
+    /**
+     * Requesting permission
+     */
+    private fun requestStoragePermission() {
+
+        /**
+         * Gets whether you should show UI with rationale for requesting a permission.
+         * You should do this only if you do not have the permission and the context in
+         * which the permission is requested does not clearly communicate to the user
+         * what would be the benefit from granting this permission.
+         * <p>
+         * For example, if you write a camera app, requesting the camera permission
+         * would be expected by the user and no rationale for why it is requested is
+         * needed. If however, the app needs location for tagging photos then a non-tech
+         * savvy user may wonder how location is related to taking photos. In this case
+         * you may choose to show UI with rationale of requesting this permission.
+         * </p>
+         *
+         * @param activity The target activity.
+         * @param permission A permission your app wants to request.
+         * @return Whether you can show permission rationale UI.
+         *
+         */
+        if (ActivityCompat.shouldShowRequestPermissionRationale(
+                this,
+                arrayOf(
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ).toString()
+            )
+        ) {
+            //If the user has denied the permission previously your code will come to this block
+            //Here you can explain why you need this permission
+            //Explain here why you need this permission
+        }
+
+        /**
+         * Requests permissions to be granted to this application. These permissions
+         * must be requested in your manifest, otherwise they will not be granted to your app.
+         */
+
+        //And finally ask for the permission
+        ActivityCompat.requestPermissions(
+            this, arrayOf(
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ),
+            STORAGE_PERMISSION_CODE
+        )
+    }
+    //END
+
+    //TODO(Step 7 - After giving an permission in Manifest file check that is it allowed or not for selecting the image from your phone)
+    //START
+    /**
+     * We are calling this method to check the permission status
+     */
+    private fun isReadStorageAllowed(): Boolean {
+        //Getting the permission status
+        // Here the checkSelfPermission is
+        /**
+         * Determine whether <em>you</em> have been granted a particular permission.
+         *
+         * @param permission The name of the permission being checked.
+         *
+         */
+        val result = ContextCompat.checkSelfPermission(
+            this, Manifest.permission.READ_EXTERNAL_STORAGE
+        )
+
+        /**
+         *
+         * @return {@link android.content.pm.PackageManager#PERMISSION_GRANTED} if you have the
+         * permission, or {@link android.content.pm.PackageManager#PERMISSION_DENIED} if not.
+         *
+         */
+        //If permission is granted returning true and If permission is not granted returning false
+        return result == PackageManager.PERMISSION_GRANTED
+    }
+    //END
+
+    //TODO(Step 5 - A unique code for asking the storage permission is declared in Companion Object.)
+    //START
+    companion object{
+
+
+        /**
+         * Permission code that will be checked in the method onRequestPermissionsResult
+         *
+         * For more Detail visit : https://developer.android.com/training/permissions/requesting#kotlin
+         */
+        private const val STORAGE_PERMISSION_CODE = 1
+        //END
     }
 }
