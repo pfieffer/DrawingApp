@@ -18,6 +18,8 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <!--TODO(Step 4 : Remove the static image which we have added as an background to drawing view.)-->
+
         <!-- In FrameLayout the component which are
        added below are in foreground and added above are in Background.-->
         <ImageView
@@ -25,8 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:contentDescription="image"
-            android:scaleType="centerCrop"
-            android:src="@drawable/image" />
+            android:scaleType="centerCrop" />
 
         <com.kidsdrawingapp.DrawingView
             android:id="@+id/drawing_view"
@@ -35,8 +36,6 @@
             android:background="#80FFFFFF" />
     </FrameLayout>
 
-    <!--TODO(Step 2 - As we have added the Linear Layout below so need to update the 'app:layout_constraintBottom_toTopOf' as "@id/ll_action_buttons" instead of "@id/ib_brush".)-->
-    <!-- Color pallet_normal -->
     <LinearLayout
         android:id="@+id/ll_paint_colors"
         android:layout_width="wrap_content"
@@ -128,16 +127,6 @@
             android:tag="@color/random" />
     </LinearLayout>
 
-    <!--TODO(Step 1 - We have added an image button for selecting the image from your phone.)-->
-    <!--Here we have added list of points :
-    1. Added an linear layout as 'll_action_buttons' and defined the attributes as per requirements.
-    2. Added the brush button in the linear layout the
-    and attributes of ConstraintLayout is added to LinearLayout
-    and removed from ib_brush button.
-    3. Added a image button same as the brush button named ib_gallery .
-    4. Added a ic_gallery image in the drawable folder.
-    5. Further steps will be in MainActivity.kt-->
-    <!--START-->
     <LinearLayout
         android:id="@+id/ll_action_buttons"
         android:layout_width="match_parent"
@@ -166,6 +155,5 @@
             android:scaleType="fitXY"
             android:src="@drawable/ic_brush" />
     </LinearLayout>
-    <!--END-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

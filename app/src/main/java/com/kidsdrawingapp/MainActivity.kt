@@ -1,9 +1,12 @@
 package com.kidsdrawingapp
 
 import android.Manifest
+import android.app.Activity
 import android.app.Dialog
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.View
 import android.widget.ImageButton
 import android.widget.Toast
@@ -43,8 +46,6 @@ class MainActivity : AppCompatActivity() {
             showBrushSizeChooserDialog()
         }
 
-        //TODO(Step 8 : Adding an click event to image button for selecting the image from gallery.)
-        //START
         ib_gallery.setOnClickListener {
             //Very firstly we will check the app required a storage permission.
             // So we will add a permission in the Android.xml for storage.
@@ -52,18 +53,23 @@ class MainActivity : AppCompatActivity() {
             //First checking if the app is already having the permission
             if (isReadStorageAllowed()) {
 
-                // If the permission is granted we will code here. But now let us just ask for the permission.
+                // TODO(Step 1 - Selecting image from gallery if the permission is granted.)
+                // START
+                // This is for selecting the image from local store or let say from Gallery/Photos.
+                val pickPhoto = Intent(
+                        Intent.ACTION_PICK,
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                )
+                startActivityForResult(pickPhoto, GALLERY)
+                // END
             } else {
 
                 //If the app don't have storage access permission we will ask for it.
                 requestStoragePermission()
             }
         }
-        // END
     }
 
-    //TODO(Step 6 - This method is override method which be executed when we update the status of the permission when we are ask to allow or deny.)
-    //START
     /**
      * This is override method and the method will be called when the user will tap on allow or deny
      *
@@ -103,7 +109,41 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-    //END
+
+    // TODO(Step 3 - An override method is called when the image is selected and we can identify the image using the unique code.)
+    // START
+    /**
+     * This is override method here we get the selected image
+     * based on the code what we have passed for selecting the image.
+     */
+    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == GALLERY) {
+                try {
+                    if (data!!.data != null) {
+
+                        // Here if the user selects the image from local storage make the image view visible.
+                        // By Default we will make it VISIBILITY as GONE.
+                        iv_background.visibility = View.VISIBLE
+
+                        // Set the selected image to the backgroung view.
+                        iv_background.setImageURI(data.data)
+                    } else {
+                        // If the selected image is not valid. Or not selected.
+                        Toast.makeText(
+                                this@MainActivity,
+                                "Error in parsing the image or its corrupted.",
+                                Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+        }
+    }
+    // END
 
     /**
      * Method is used to launch the dialog to select different brush sizes.
@@ -159,9 +199,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    //TODO(Step 4 - For the first time you need to ask for the permission
-    // for selecting the image from your phone or when it is not allowed it is when you are about to select an image from phone storage.)
-    //START
     /**
      * Requesting permission
      */
@@ -212,10 +249,7 @@ class MainActivity : AppCompatActivity() {
             STORAGE_PERMISSION_CODE
         )
     }
-    //END
 
-    //TODO(Step 7 - After giving an permission in Manifest file check that is it allowed or not for selecting the image from your phone)
-    //START
     /**
      * We are calling this method to check the permission status
      */
@@ -241,10 +275,7 @@ class MainActivity : AppCompatActivity() {
         //If permission is granted returning true and If permission is not granted returning false
         return result == PackageManager.PERMISSION_GRANTED
     }
-    //END
 
-    //TODO(Step 5 - A unique code for asking the storage permission is declared in Companion Object.)
-    //START
     companion object{
 
 
@@ -254,6 +285,11 @@ class MainActivity : AppCompatActivity() {
          * For more Detail visit : https://developer.android.com/training/permissions/requesting#kotlin
          */
         private const val STORAGE_PERMISSION_CODE = 1
-        //END
+
+        // TODO(Step 2 - A unique code for selecting an image from Gallery or let's say phone storage.)
+        // START
+        // This is to identify the selection of image from Gallery.
+        private const val GALLERY = 2
+        // END
     }
 }
