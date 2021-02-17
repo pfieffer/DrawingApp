@@ -1,0 +1,7 @@
+In this version we have done the following steps as below :
+
+1. We have created a project in android studio with Empty Activity.
+2. We have done some modification in the manifest file as per our requirement.
+3. As we are about to create a drawing app so we have created a kotlin class which extends the View class 
+	with some basic features as Canvas is created and on canvas using color and stroke size we are able to draw random line which are not store on canvas yet.
+4. We have used the class in activities xml file to inflate it to the UI.
