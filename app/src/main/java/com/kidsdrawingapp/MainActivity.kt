@@ -10,5 +10,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // TODO(Step 2 : The default brush size is set programmatically when the app is launched)
+        //START
+        drawing_view.setSizeForBrush(20.toFloat()) // Setting the default brush size to drawing view.
+        // END
     }
 }

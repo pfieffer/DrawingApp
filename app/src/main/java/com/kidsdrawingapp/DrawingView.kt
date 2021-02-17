@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
+import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
 
@@ -159,6 +160,22 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
         invalidate()
         return true
     }
+
+    // TODO(Step 1 : Added this function to set the brush size dynamically.)
+    //START
+    /**
+     * This method is called when either the brush or the eraser
+     * sizes are to be changed. This method sets the brush/eraser
+     * sizes to the new values depending on user selection.
+     */
+    fun setSizeForBrush(newSize: Float) {
+        mBrushSize = TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, newSize,
+                resources.displayMetrics
+        )
+        mDrawPaint!!.strokeWidth = mBrushSize
+    }
+    // END
 
     // An inner class for custom path with two params as color and stroke size.
     internal inner class CustomPath(var color: Int, var brushThickness: Float) : Path()
