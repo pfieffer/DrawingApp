@@ -12,11 +12,8 @@ import kotlinx.android.synthetic.main.dialog_brush_size.*
 
 class MainActivity : AppCompatActivity() {
 
-    // TODO(Step 6 : A variable for current color is picked from color pallet)
-    // START
     private var mImageButtonCurrentPaint: ImageButton? =
         null // A variable for current color is picked from color pallet.
-    // END
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,8 +21,6 @@ class MainActivity : AppCompatActivity() {
 
         drawing_view.setSizeForBrush(20.toFloat()) // Setting the default brush size to drawing view.
 
-        // TODO(Step 7 : Here we have selected the default color and updated the selected color as an active.)
-        // START
         /**
          * This is to select the default Image button which is
          * active and color is already defined in the drawing view class.
@@ -39,7 +34,6 @@ class MainActivity : AppCompatActivity() {
                 R.drawable.pallet_pressed
             )
         )
-        //END
 
         ib_brush.setOnClickListener {
             showBrushSizeChooserDialog()
@@ -70,5 +64,34 @@ class MainActivity : AppCompatActivity() {
             brushDialog.dismiss()
         })
         brushDialog.show()
+    }
+
+    // TODO(Step 2 - A function for color selection.)
+    /**
+     * Method is called when color is clicked from pallet_normal.
+     *
+     * @param view ImageButton on which click took place.
+     */
+    fun paintClicked(view: View) {
+        if (view !== mImageButtonCurrentPaint) {
+            // Update the color
+            val imageButton = view as ImageButton
+            // Here the tag is used for swaping the current color with previous color.
+            // The tag stores the selected view
+            val colorTag = imageButton.tag.toString()
+            // The color is set as per the selected tag here.
+            drawing_view.setColor(colorTag)
+            // Swap the backgrounds for last active and currently active image button.
+            imageButton.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.pallet_pressed))
+            mImageButtonCurrentPaint!!.setImageDrawable(
+                    ContextCompat.getDrawable(
+                            this,
+                            R.drawable.pallet_normal
+                    )
+            )
+
+            //Current view is updated with selected view in the form of ImageButton.
+            mImageButtonCurrentPaint = view
+        }
     }
 }
