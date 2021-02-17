@@ -57,6 +57,11 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
 
     private val mPaths = ArrayList<CustomPath>() // ArrayList for Paths
 
+    // TODO(Step 2 : A variable for array list of undo paths.)
+    // START
+    private val mUndoPaths = ArrayList<CustomPath>()
+    // END
+
     init {
         setUpDrawing()
     }
@@ -184,6 +189,23 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
         color = Color.parseColor(newColor)
         mDrawPaint!!.color = color
     }
+
+    // TODO(Step 3 : A function to add the paths for undo option.)
+    // START
+    /**
+     * This function is called when the user selects the undo
+     * command from the application. This function removes the
+     * last stroke input by the user depending on the
+     * number of times undo has been activated.
+     */
+    fun onClickUndo() {
+        if (mPaths.size > 0) {
+
+            mUndoPaths.add(mPaths.removeAt(mPaths.size - 1))
+            invalidate() // Invalidate the whole view. If the view is visible
+        }
+    }
+    // END
 
     // An inner class for custom path with two params as color and stroke size.
     internal inner class CustomPath(var color: Int, var brushThickness: Float) : Path()

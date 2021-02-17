@@ -53,21 +53,26 @@ class MainActivity : AppCompatActivity() {
             //First checking if the app is already having the permission
             if (isReadStorageAllowed()) {
 
-                // TODO(Step 1 - Selecting image from gallery if the permission is granted.)
-                // START
                 // This is for selecting the image from local store or let say from Gallery/Photos.
                 val pickPhoto = Intent(
                         Intent.ACTION_PICK,
                         MediaStore.Images.Media.EXTERNAL_CONTENT_URI
                 )
                 startActivityForResult(pickPhoto, GALLERY)
-                // END
             } else {
 
                 //If the app don't have storage access permission we will ask for it.
                 requestStoragePermission()
             }
         }
+
+        // TODO(Step 4 - Adding an click event for undo option.)
+        // START
+        ib_undo.setOnClickListener {
+            // This is for undo recent stroke.
+            drawing_view.onClickUndo()
+        }
+        // END
     }
 
     /**
@@ -110,8 +115,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // TODO(Step 3 - An override method is called when the image is selected and we can identify the image using the unique code.)
-    // START
     /**
      * This is override method here we get the selected image
      * based on the code what we have passed for selecting the image.
@@ -143,7 +146,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-    // END
 
     /**
      * Method is used to launch the dialog to select different brush sizes.
@@ -286,10 +288,7 @@ class MainActivity : AppCompatActivity() {
          */
         private const val STORAGE_PERMISSION_CODE = 1
 
-        // TODO(Step 2 - A unique code for selecting an image from Gallery or let's say phone storage.)
-        // START
         // This is to identify the selection of image from Gallery.
         private const val GALLERY = 2
-        // END
     }
 }
