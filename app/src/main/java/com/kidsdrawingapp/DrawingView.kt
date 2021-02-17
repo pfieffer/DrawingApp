@@ -161,8 +161,6 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
         return true
     }
 
-    // TODO(Step 1 : Added this function to set the brush size dynamically.)
-    //START
     /**
      * This method is called when either the brush or the eraser
      * sizes are to be changed. This method sets the brush/eraser
@@ -175,7 +173,6 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
         )
         mDrawPaint!!.strokeWidth = mBrushSize
     }
-    // END
 
     // An inner class for custom path with two params as color and stroke size.
     internal inner class CustomPath(var color: Int, var brushThickness: Float) : Path()
