@@ -6,12 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <!--TODO(Step 1 : Some designing improvements are done over here.)-->
+    <!--Here we have added list of points
+    1. Added a custom border Background to drawing view which is defined
+       in drawable folder so user can know how much screen area is allowed to draw..
+    2. Added a margins to drawing view.-->
+    <!--START-->
     <com.kidsdrawingapp.DrawingView
         android:id="@+id/drawing_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_margin="5dp"
+        android:background="@drawable/background_drawing_view_layout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <!--END-->
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -54,10 +54,7 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
      */
     private var canvas: Canvas? = null
 
-    // TODO("Step 1 : Creating and initializing the array list of CustomPath")
-    // START
     private val mPaths = ArrayList<CustomPath>() // ArrayList for Paths
-    // END
 
     init {
         setUpDrawing()
@@ -110,14 +107,11 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
          */
         canvas.drawBitmap(mCanvasBitmap!!, 0f, 0f, mCanvasPaint)
 
-        // TODO("Step 3 : Drawing a list of strokes which are added in the list of paths.")
-        //START
         for (p in mPaths) {
             mDrawPaint!!.strokeWidth = p.brushThickness
             mDrawPaint!!.color = p.color
             canvas.drawPath(p, mDrawPaint!!)
         }
-        // END
 
         if (!mDrawPath!!.isEmpty) {
             mDrawPaint!!.strokeWidth = mDrawPath!!.brushThickness
@@ -155,10 +149,7 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
 
             MotionEvent.ACTION_UP -> {
 
-                // TODO("Step 2 : Added the custom drawPath to list. This is to store the stroke in list")
-                // START
                 mPaths.add(mDrawPath!!) //Add when to stroke is drawn to canvas and added in the path arraylist
-                // END
 
                 mDrawPath = CustomPath(color, mBrushSize)
             }

@@ -4,8 +4,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
-// TODO (Step 1 : Creating a Empty Main Activity when creating a project.)
-// START
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -14,4 +12,3 @@ class MainActivity : AppCompatActivity() {
 
     }
 }
-// END
